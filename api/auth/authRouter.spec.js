@@ -140,4 +140,18 @@ describe("Test login", () => {
         expect(response.body.token).toBe(undefined);
     });
 
+    
+    test("Can log in successfully when data is ok", async () => {
+        const response = await request(server)
+            .post("/api/auth/login")
+            .send({
+                username: "Jamie",
+                password: "1234"
+            });
+
+        expect(response.status).toBe(200);
+        expect(response.headers["content-type"]).toMatch(/application\/json/);
+        expect(response.body.token).toBeTruthy();
+    });
+
 });
