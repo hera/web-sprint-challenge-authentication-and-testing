@@ -89,26 +89,12 @@ describe("Test login", () => {
     });
 
 
-    test("Log in successfully with valid data", async () => {
+    test("Can't log in if username is wrong", async () => {
         const response = await request(server)
             .post("/api/auth/login")
             .send({
-                username: "Jamie",
+                username: "Jamieeeeeeee",
                 password: "1234"
-            });
-
-        expect(response.status).toBe(200);
-        expect(response.headers["content-type"]).toMatch(/application\/json/);
-        expect(response.body.token).toBeTruthy();
-    });
-
-
-    test("Can't log in if password is wrong", async () => {
-        const response = await request(server)
-            .post("/api/auth/login")
-            .send({
-                username: "Jamie",
-                password: "wrong password"
             });
 
         expect(response.status).toBe(403);
@@ -116,13 +102,12 @@ describe("Test login", () => {
         expect(response.body.token).toBe(undefined);
     });
 
-
-    test("Can't log in if username is wrong", async () => {
+    test("Can't log in if password is wrong", async () => {
         const response = await request(server)
             .post("/api/auth/login")
             .send({
-                username: "Jamieeeeeeee",
-                password: "1234"
+                username: "Jamie",
+                password: "123456"
             });
 
         expect(response.status).toBe(403);
@@ -141,7 +126,7 @@ describe("Test login", () => {
         expect(response.body.token).toBe(undefined);
     });
 
-    
+
     test("Can't log in using with invalid credentials", async () => {
         const response = await request(server)
             .post("/api/auth/login")

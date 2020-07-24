@@ -12,8 +12,9 @@ function getById (id) {
     return db("user").select("id", "username").where({id});
 }
 
+// ! Response contains password !
 function getByUsername (username) {
-    return db("user").select("id", "username").where({username});
+    return db("user").where({username});
 }
 
 function register (userData) {
