@@ -27,7 +27,8 @@
         "express": "^4.17.1",
         "helmet": "^3.22.0",
         "knex": "^0.21.0",
-        "pg": "^8.3.0"
+        "pg": "^8.3.0",
+        "schema-inspector": "^1.7.0"
     },
     "devDependencies": {
         "jest": "^26.1.0",

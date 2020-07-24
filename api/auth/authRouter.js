@@ -1,11 +1,16 @@
-const router = require("express").Router();
+const express = require("express");
+
+const router = express.Router();
+
 
 router.post("/register", (req, res) => {
-    // implement registration
+    res.status(501).send("Not implemented");
 });
 
+
 router.post("/login", (req, res) => {
-    // implement login
+    res.status(501).send("Not implemented");
 });
+
 
 module.exports = router;
