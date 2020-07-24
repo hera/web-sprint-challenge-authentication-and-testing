@@ -4,11 +4,16 @@ const db = require("../../data/dbConfig");
 
 module.exports = {
     getById,
-    register
+    register,
+    getByUsername
 };
 
 function getById (id) {
     return db("user").select("id", "username").where({id});
+}
+
+function getByUsername (username) {
+    return db("user").select("id", "username").where({username});
 }
 
 function register (userData) {

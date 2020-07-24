@@ -29,7 +29,7 @@ describe("Test login", () => {
         expect(response.body[0]["id"]).toBeTruthy();
     });
 
-    test("Try to create a user with same username and password", async () => {
+    test("Can't create a user with the same username and password", async () => {
         const response = await request(server)
             .post("/api/auth/register")
             .send({
@@ -42,7 +42,7 @@ describe("Test login", () => {
         expect(response.body.error).toBeTruthy();
     });
 
-    test("Try to create a user with invalid username and password", async () => {
+    test("Can't create a user with invalid username and password", async () => {
         const response = await request(server)
             .post("/api/auth/register")
             .send({

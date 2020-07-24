@@ -1,5 +1,6 @@
 const inspector = require("schema-inspector");
 const userSchema = require("./userSchema");
+const userDb = require("./userModel");
 
 
 module.exports = {
@@ -13,11 +14,19 @@ function authenticate (req, res, next) {
 };
 
 
-function validateUserData (req, res, next) {
+async function validateUserData (req, res, next) {
     const validationResult = inspector.validate(userSchema, req.body);
 
     if (validationResult.valid) {
-        next();
+        const userFound = await userDb.getByUsername(req.body.username);
+
+        if (userFound.length === 0) {
+            next();
+        } else {
+            res.status(400).json({
+                error: "User exists. Please provide another username."
+            });
+        }
     } else {
         res.status(400).json({
             error: "Bad request. Please provide valid username and password.",
