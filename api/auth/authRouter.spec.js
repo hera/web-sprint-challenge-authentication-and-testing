@@ -42,7 +42,7 @@ describe("Test login", () => {
         expect(response.body.error).toBeTruthy();
     });
 
-    test("Can't create a user with invalid username and password", async () => {
+    test("Can't create a user with empty username and password", async () => {
         const response = await request(server)
             .post("/api/auth/register")
             .send({
@@ -55,6 +55,14 @@ describe("Test login", () => {
         expect(response.body.error).toBeTruthy();
     });
 
-    
+    test("Can't create a user with missing data", async () => {
+        const response = await request(server)
+            .post("/api/auth/register")
+            .send({});
+
+        expect(response.status).toBe(400);
+        expect(response.headers["content-type"]).toMatch(/application\/json/);
+        expect(response.body.error).toBeTruthy();
+    });
 
 });
