@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const inspector = require("schema-inspector");
 const userSchema = require("./userSchema");
 const userDb = require("./userModel");
@@ -9,11 +11,26 @@ module.exports = {
     checkUsernameUnique
 };
 
-
 function authenticate (req, res, next) {
-    res.status(401).json({ you: "shall not pass!" });
-};
+    const token = req.headers.authorization;
 
+    if (token) {
+        jwt.verify(token, process.env.SECRET, (error, decodedToken) => {
+            if (!error) {
+                req.jwt = decodedToken;
+                next();
+            } else {
+                res.status(403).json({
+                    error: "Access denied"
+                });
+            }
+        });
+    } else {
+        res.status(401).json({
+            error: "Unauthorized. Please provide valid token."
+        });
+    }
+}
 
 function validateUserData (req, res, next) {
     const validationResult = inspector.validate(userSchema, req.body);

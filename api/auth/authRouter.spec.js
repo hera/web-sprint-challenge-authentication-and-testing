@@ -14,6 +14,7 @@ describe("Test register", () => {
     });
 
 
+
     test("Create a user successfully", async () => {
         const response = await request(server)
             .post("/api/auth/register")
@@ -140,8 +141,8 @@ describe("Test login", () => {
         expect(response.body.token).toBe(undefined);
     });
 
-    
-    test("Can log in successfully when data is ok", async () => {
+
+    test("Can log in using valid credentials", async () => {
         const response = await request(server)
             .post("/api/auth/login")
             .send({
@@ -153,5 +154,6 @@ describe("Test login", () => {
         expect(response.headers["content-type"]).toMatch(/application\/json/);
         expect(response.body.token).toBeTruthy();
     });
+    
 
 });
